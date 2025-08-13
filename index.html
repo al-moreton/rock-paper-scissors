@@ -1,0 +1,37 @@
+<html>
+
+<body>
+    <h1>
+        Rock paper scissors
+    </h1>
+    <p>
+        Choose your weapon!
+    </p>
+    <button class='humanChoice' onclick="playGame('rock')">Rock</button>
+    <button class='humanChoice' onclick="playGame('paper')">Paper</button>
+    <button class='humanChoice' onclick="playGame('scissors')">Scissors</button>
+    <h2 id='gameWinner'></h2>
+    <div id='score'>
+        <h3>
+            Score
+        </h3>
+        <p id='humanScore'>
+            Human: 0
+        </p>
+        <p id='computerScore'>
+            Computer: 0
+        </p>
+    </div>
+    <div>
+        <h3 id='gameHistoryTitle'>
+        </h3>
+        <div id='gameHistory'>
+        </div>
+    </div>
+    <div>
+        <button id='restartGame' onclick='restartGame()' disabled='true'>Restart game</button>
+    </div>
+</body>
+
+</html>
+<script src='game.js'></script>
