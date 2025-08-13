@@ -9,7 +9,7 @@ const maxGames = 3;
 
 let humanScore = 0;
 let computerScore = 0;
-let gameNumber = 0;
+let roundNumber = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
@@ -32,8 +32,8 @@ function playRound(humanChoice, computerChoice) {
 
     if (humanChoice === computerChoice) {
         winner = 'tie';
-        gameNumber++;
-        updateHistory(winner, humanScore, computerScore, gameNumber);
+        roundNumber++;
+        updateHistory(winner, humanScore, computerScore, roundNumber);
     } else if (
         (humanChoice === 'rock' && computerChoice === 'scissors') ||
         (humanChoice === 'paper' && computerChoice === 'rock') ||
@@ -41,19 +41,19 @@ function playRound(humanChoice, computerChoice) {
     ) {
         humanScore++;
         winner = 'human';
-        gameNumber++;
-        updateHistory(winner, humanScore, computerScore, gameNumber);
+        roundNumber++;
+        updateHistory(winner, humanScore, computerScore, roundNumber);
     } else {
         computerScore++;
         winner = 'computer';
-        gameNumber++;
-        updateHistory(winner, humanScore, computerScore, gameNumber);
+        roundNumber++;
+        updateHistory(winner, humanScore, computerScore, roundNumber);
     }
 }
 
-function updateHistory(winner, humanScore, computerScore, gameNumber) {
+function updateHistory(winner, humanScore, computerScore, roundNumber) {
     let p = document.createElement('p');
-    p.appendChild(document.createTextNode('Round ' + gameNumber + ': The winner is: ' + winner));
+    p.appendChild(document.createTextNode('Round ' + roundNumber + ': The winner is: ' + winner));
     elGameHistory.appendChild(p);
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
@@ -72,7 +72,7 @@ function playGame(humanChoice) {
 function gameWinner() {
     let gameWinner;
 
-    if (((humanScore || computerScore) > (maxGames / 2) || (gameNumber >= maxGames))) {
+    if (((humanScore || computerScore) > (maxGames / 2) || (roundNumber >= maxGames))) {
         if (humanScore > computerScore) {
             gameWinner = 'You won the game!'
         } else if (computerScore > humanScore) {
@@ -94,7 +94,7 @@ function gameWinner() {
 function restartGame() {
     humanScore = 0;
     computerScore = 0;
-    gameNumber = 0;
+    roundNumber = 0;
 
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
