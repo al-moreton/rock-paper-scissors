@@ -53,7 +53,8 @@ function playRound(humanChoice, computerChoice) {
 
 function updateHistory(winner, humanScore, computerScore, roundNumber) {
     let p = document.createElement('p');
-    p.appendChild(document.createTextNode('Round ' + roundNumber + ': The winner is: ' + winner));
+    p.appendChild(document.createTextNode('Round ' + roundNumber + 
+        ': The winner is: ' + winner));
     elGameHistory.appendChild(p);
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
