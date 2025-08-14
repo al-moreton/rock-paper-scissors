@@ -33,7 +33,7 @@ function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
         winner = 'tie';
         roundNumber++;
-        updateHistory(winner, humanScore, computerScore, roundNumber);
+        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice);
     } else if (
         (humanChoice === 'rock' && computerChoice === 'scissors') ||
         (humanChoice === 'paper' && computerChoice === 'rock') ||
@@ -42,19 +42,19 @@ function playRound(humanChoice, computerChoice) {
         humanScore++;
         winner = 'human';
         roundNumber++;
-        updateHistory(winner, humanScore, computerScore, roundNumber);
+        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice);
     } else {
         computerScore++;
         winner = 'computer';
         roundNumber++;
-        updateHistory(winner, humanScore, computerScore, roundNumber);
+        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice);
     }
 }
 
-function updateHistory(winner, humanScore, computerScore, roundNumber) {
+function updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice) {
     let p = document.createElement('p');
     p.appendChild(document.createTextNode('Round ' + roundNumber + 
-        ': The winner is: ' + winner));
+        ': the computer chose ' + computerChoice + '. The winner is: ' + winner));
     elGameHistory.appendChild(p);
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
