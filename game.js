@@ -17,6 +17,7 @@ let fullGameHistory = [];
 document.addEventListener('DOMContentLoaded', function () {
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
+    elRestartGame.style.display = 'none';
 }, false);
 
 function getComputerChoice() {
