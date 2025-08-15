@@ -5,6 +5,7 @@ const elComputerScore = document.getElementById('computerScore');
 const elGameWinner = document.getElementById('gameWinner');
 const elRestartGame = document.getElementById('restartGame');
 const elGameHistoryTitle = document.getElementById('gameHistoryTitle');
+const elFullGameHistory = document.getElementById('fullGameHistory');
 const maxGames = 3;
 
 let humanScore = 0;
@@ -31,30 +32,37 @@ function playRound(humanChoice, computerChoice) {
     let winner;
 
     if (humanChoice === computerChoice) {
-        winner = 'tie';
+        winner = 'It\s a tie!';
         roundNumber++;
-        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice);
+        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice, humanChoice);
     } else if (
         (humanChoice === 'rock' && computerChoice === 'scissors') ||
         (humanChoice === 'paper' && computerChoice === 'rock') ||
         (humanChoice === 'scissors' && computerChoice === 'paper')
     ) {
         humanScore++;
-        winner = 'human';
+        winner = 'You win!';
         roundNumber++;
-        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice);
+        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice, humanChoice);
     } else {
         computerScore++;
-        winner = 'computer';
+        winner = 'The computer wins!';
         roundNumber++;
-        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice);
+        updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice, humanChoice);
     }
 }
 
-function updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice) {
+function updateHistory(winner, humanScore, computerScore, roundNumber, computerChoice, humanChoice) {
     let p = document.createElement('p');
-    p.appendChild(document.createTextNode('Round ' + roundNumber + 
-        ': the computer chose ' + computerChoice + '. The winner is: ' + winner));
+
+    if (computerChoice === humanChoice) {
+        p.appendChild(document.createTextNode('Round ' + roundNumber + 
+        ': You both chose ' + computerChoice + '. ' + winner));
+    } else {
+        p.appendChild(document.createTextNode('Round ' + roundNumber + 
+        ': The computer chose ' + computerChoice + '. ' + winner));
+    }
+
     elGameHistory.appendChild(p);
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
@@ -64,9 +72,7 @@ function playGame(humanChoice) {
     elGameHistoryTitle.innerHTML = 'Game History';
     elRestartGame.disabled = false;
     elRestartGame.style.visibility = 'visible';
-    const humanSelection = humanChoice;
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
+    playRound(humanChoice, getComputerChoice());
     gameWinner();
 }
 
@@ -108,3 +114,6 @@ function restartGame() {
         elGameButtons[i].disabled = false;
     }
 }
+
+// Add local storage to keep a game history
+// With the ability to look at previous game moves?
