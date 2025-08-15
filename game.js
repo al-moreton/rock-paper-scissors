@@ -11,6 +11,8 @@ const maxGames = 3;
 let humanScore = 0;
 let computerScore = 0;
 let roundNumber = 0;
+let gameNumber = 0;
+let fullGameHistory = [];
 
 document.addEventListener('DOMContentLoaded', function () {
     elHumanScore.innerText = 'Human: ' + humanScore + '/' + maxGames;
@@ -56,11 +58,11 @@ function updateHistory(winner, humanScore, computerScore, roundNumber, computerC
     let p = document.createElement('p');
 
     if (computerChoice === humanChoice) {
-        p.appendChild(document.createTextNode('Round ' + roundNumber + 
-        ': You both chose ' + computerChoice + '. ' + winner));
+        p.appendChild(document.createTextNode('Round ' + roundNumber +
+            ': You both chose ' + computerChoice + '. ' + winner));
     } else {
-        p.appendChild(document.createTextNode('Round ' + roundNumber + 
-        ': The computer chose ' + computerChoice + '. ' + winner));
+        p.appendChild(document.createTextNode('Round ' + roundNumber +
+            ': The computer chose ' + computerChoice + '. ' + winner));
     }
 
     elGameHistory.appendChild(p);
@@ -71,7 +73,7 @@ function updateHistory(winner, humanScore, computerScore, roundNumber, computerC
 function playGame(humanChoice) {
     elGameHistoryTitle.innerHTML = 'Game History';
     elRestartGame.disabled = false;
-    elRestartGame.style.visibility = 'visible';
+    elRestartGame.style.display = 'block';
     playRound(humanChoice, getComputerChoice());
     gameWinner();
 }
@@ -80,6 +82,7 @@ function gameWinner() {
     let gameWinner;
 
     if (((humanScore || computerScore) > (maxGames / 2) || (roundNumber >= maxGames))) {
+        gameNumber++;
         if (humanScore > computerScore) {
             gameWinner = 'You won the game!'
         } else if (computerScore > humanScore) {
@@ -95,6 +98,8 @@ function gameWinner() {
         for (let i = 0; i < elGameButtons.length; i++) {
             elGameButtons[i].disabled = true;
         }
+
+        addToFullGameHistory(gameNumber, humanScore, computerScore);
     }
 }
 
@@ -107,7 +112,7 @@ function restartGame() {
     elComputerScore.innerText = 'Computer: ' + computerScore + '/' + maxGames;
     elGameHistory.innerHTML = '';
     elGameWinner.innerHTML = '';
-    elRestartGame.style.visibility = 'hidden';
+    elRestartGame.style.display = 'none';
     elGameHistoryTitle.innerHTML = '';
 
     for (let i = 0; i < elGameButtons.length; i++) {
@@ -117,3 +122,27 @@ function restartGame() {
 
 // Add local storage to keep a game history
 // With the ability to look at previous game moves?
+
+function addToFullGameHistory(gameNumber, humanScore, computerScore) {
+    elFullGameHistory.innerHTML = '';
+    fullGameHistory.push([gameNumber, humanScore, computerScore]);
+
+    fullGameHistory.forEach((element) => {
+        element.forEach((element, index) => {
+            if (index === 0) {
+                let el = document.createElement('h4');
+                el.style.marginBottom = '0px';
+                el.appendChild(document.createTextNode('Game: ' + element));
+                elFullGameHistory.appendChild(el);
+            } else if (index === 1) {
+                let el = document.createElement('span');
+                el.appendChild(document.createTextNode('Human: ' + element + ' '));
+                elFullGameHistory.appendChild(el);
+            } else {
+                let el = document.createElement('span');
+                el.appendChild(document.createTextNode('Computer: ' + element));
+                elFullGameHistory.appendChild(el);
+            }
+        });
+    });
+}
