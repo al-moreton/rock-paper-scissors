@@ -1,4 +1,4 @@
-# Rock, paper, sciccors
+# Rock, paper, scissors
 Part of The Odin Project JS foundations course. Built as per task requirements, with additional functionality.
 
 ## How it's made?
